@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damini's Canvas Art - Online Shop</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #00509e;
+            --secondary-blue: #112240;
+            --light-bg: #e6f1ff;
+            --text-dark: #0a192f;
+            --text-muted: #4a5d80;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            transition: background-color 0.5s ease;
+        }
+
+        .navbar {
+            background-color: var(--light-bg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-blue) !important;
+        }
+
+        .hero-section {
+            background: url('https://placehold.co/1920x1080/c2cff7/ffffff?text=Artist+Studio+Background') no-repeat center center/cover;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .btn-custom {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--light-bg);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-custom:hover {
+            background-color: #0060c2;
+            transform: translateY(-2px);
+            color: var(--light-bg);
+        }
+
+        .section-heading {
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .card {
+            background-color: var(--light-bg);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .art-price {
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .footer {
+            background-color: var(--secondary-blue);
+            color: var(--text-light);
+        }
+        
+        .social-icon {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Slideshow Specific Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: auto;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Page Navigation Logic */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fs-4" href="#">Art Mine</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('home')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('shop')">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('contact')">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <div class="container text-center text-dark">
+                <h1 class="hero-title display-2 mb-3">Art that speaks to the soul.</h1>
+                <p class="hero-subtitle mb-5">Discover unique canvas paintings and bring home a piece of original art.</p>
+            </div>
+        </header>
+
+        <!-- Slideshow Section -->
+        <section class="py-5 bg-white">
+            <div class="container">
+                <h2 class="text-center section-heading mb-5">Artist's Portfolio</h2>
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <img src="https://placehold.co/800x600/b8c4e0/ffffff?text=Painting+1" alt="Painting 1">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="https://placehold.co/800x600/8094b8/ffffff?text=Painting+2" alt="Painting 2">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="https://placehold.co/800x600/4a6192/ffffff?text=Painting+3" alt="Painting 3">
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Shop Page -->
+    <div id="shop" class="page">
+        <!-- Featured Art Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center section-heading mb-5">Featured Paintings</h2>
+                <div class="row g-4">
+                    <!-- Art Piece 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://placehold.co/600x400/9b59b6/ffffff?text=Abstract+Nebula" class="card-img-top img-fluid rounded-top-3" alt="Abstract Nebula Painting">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Abstract Nebula</h5>
+                                <p class="card-text text-muted">A vibrant mix of cosmic colors, capturing the mystery of space. Oil on canvas.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="art-price fs-5">$450</span>
+                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Art Piece 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://placehold.co/600x400/3498db/ffffff?text=Ocean+Serenity" class="card-img-top img-fluid rounded-top-3" alt="Ocean Serenity Painting">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Ocean Serenity</h5>
+                                <p class="card-text text-muted">A calm and soothing representation of a peaceful ocean scene. Acrylic on canvas.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="art-price fs-5">$380</span>
+                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Art Piece 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://placehold.co/600x400/e74c3c/ffffff?text=Urban+Life" class="card-img-top img-fluid rounded-top-3" alt="Urban Life Painting">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Urban Life</h5>
+                                <p class="card-text text-muted">A dynamic painting of city life and its constant motion. Mixed media on canvas.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="art-price fs-5">$520</span>
+                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <!-- Contact & Commissions Section -->
+        <section class="py-5">
+            <div class="container text-center">
+                <h2 class="section-heading mb-4">Get in Touch</h2>
+                <p class="lead text-muted mb-5">
+                    For inquiries about custom pieces, commissions, or any other questions, please contact me below.
+                </p>
+                <div class="d-flex justify-content-center">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <a href="mailto:info@stellarcanvas.com" class="text-decoration-none text-dark">
+                                <i class="fa-solid fa-envelope fs-4 me-2"></i> info@stellarcanvas.com
+                            </a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <i class="fa-brands fa-instagram fs-4 me-2"></i> @stellarcanvas
+                            </a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <i class="fa-brands fa-twitter fs-4 me-2"></i> @stellarcanvas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2024 Damini's Canvas. All rights reserved.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let slideIndex = 1;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            showSlides(slideIndex);
+        });
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.getElementsByClassName('page');
+            for (let i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+
+            // Show the requested page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
