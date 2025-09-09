@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damini's Canvas Art - Online Shop</title>
-    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+
+.fade {
+    animation: fadeEffect 5s;
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
         :root {
             --primary-blue: #00509e;
             --secondary-blue: #112240;
@@ -44,26 +51,61 @@
             color: var(--primary-blue) !important;
         }
 
-        .hero-section {
-            background: url('https://placehold.co/1920x1080/c2cff7/ffffff?text=Artist+Studio+Background') no-repeat center center/cover;
-            height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--text-dark);
-        }
+       .hero-section {
+    position: relative;
+    height: 85vh;
+    background: url('https://placehold.co/1920x1080/c2cff7/ffffff?text=Artist+Studio+Background') no-repeat center center/cover;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 2rem;
+}
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-        }
+.hero-video-bg {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+/* Show video on mobile */
+@media (max-width: 768px) {
+    .hero-section {
+        background: none;
+    }
+
+    .hero-video-bg {
+        display: block;
+    }
+}
+
+.hero-overlay-text {
+    background-color: rgba(255, 255, 255, 0.8); /* semi-transparent background */
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    margin: 1.5rem auto 0 auto; /* Center horizontally, top margin only */
+    max-width: 90%;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
 
         .btn-custom {
             background-color: var(--primary-blue);
@@ -109,7 +151,7 @@
         
         .footer {
             background-color: var(--secondary-blue);
-            color: var(--text-light);
+            color: white;
         }
         
         .social-icon {
@@ -122,26 +164,55 @@
             color: var(--primary-blue);
         }
 
-        /* Slideshow Specific Styles */
+        /* Page Navigation Logic */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        
+        /* Video Background Styles */
+        .hero-video-bg {
+            display: none; /* Hidden by default on desktop */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        /* Media query to show the video on mobile devices */
+        @media (max-width: 768px) {
+            .hero-section {
+                background: none; /* Remove background image on mobile */
+            }
+            .hero-video-bg {
+                display: block; /* Show on screens smaller than 768px */
+            }
+        }
+        
+        /* Slideshow styles */
         .slideshow-container {
             position: relative;
-            max-width: 800px;
+            max-width: 1000px;
             margin: auto;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .mySlides {
             display: none;
-            width: 100%;
         }
 
         .mySlides img {
             width: 100%;
             height: auto;
+            border-radius: 8px;
         }
 
+        /* Next & previous buttons */
         .prev, .next {
             cursor: pointer;
             position: absolute;
@@ -149,13 +220,13 @@
             width: auto;
             margin-top: -22px;
             padding: 16px;
-            color: white;
+            color: var(--primary-blue);
             font-weight: bold;
             font-size: 18px;
             transition: 0.6s ease;
             border-radius: 0 3px 3px 0;
             user-select: none;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(255, 255, 255, 0.7);
         }
 
         .next {
@@ -164,25 +235,52 @@
         }
 
         .prev:hover, .next:hover {
-            background-color: rgba(0,0,0,0.8);
+            background-color: var(--primary-blue);
+            color: white;
         }
 
-        /* Page Navigation Logic */
-        .page {
-            display: none;
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
         }
-        .page.active {
-            display: block;
+
+        /* The dots/circles */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
         }
+
+        .active-dot, .dot:hover {
+            background-color: var(--primary-blue);
+        }
+
+.cursive-brand {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem; /* optional: larger for elegance */
+    font-weight: 400;
+}
 
     </style>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
         <div class="container">
-            <a class="navbar-brand fs-4" href="#">Art Mine</a>
+           <a class="navbar-brand fs-4 cursive-brand" href="#">Art Mine</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -202,45 +300,76 @@
         </div>
     </nav>
 
-    <!-- Home Page -->
     <div id="home" class="page active">
-        <!-- Hero Section -->
         <header class="hero-section">
-            <div class="container text-center text-dark">
-                <h1 class="hero-title display-2 mb-3">Art that speaks to the soul.</h1>
-                <p class="hero-subtitle mb-5">Discover unique canvas paintings and bring home a piece of original art.</p>
-            </div>
-        </header>
+    <video autoplay muted loop playsinline class="hero-video-bg">
+        <source src="https://github.com/daminiPimpalshende/my_website/raw/main/1000390268.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-        <!-- Slideshow Section -->
-        <section class="py-5 bg-white">
+    <!-- Text overlay positioned at the top -->
+    <div class="hero-overlay-text text-center text-dark">
+        <h1 class="hero-title">Damini's Art Mine</h1>
+        <p class="hero-subtitle">Bringing Imagination to Life Through Art</p>
+    </div>
+
+    <!-- Button remains in the center (or can be moved below gallery if preferred) -->
+    <div class="container text-center text-dark mt-auto mb-5">
+    <a href="#featured-section" class="btn btn-custom mt-3">Explore Now</a>
+</div>
+
+</header>
+
+
+        <section class="py-5">
             <div class="container">
-                <h2 class="text-center section-heading mb-5">Artist's Portfolio</h2>
+                <h2 class="text-center section-heading mb-5">Artist's Gallery</h2>
                 <div class="slideshow-container">
                     <div class="mySlides fade">
-                        <img src="https://placehold.co/800x600/b8c4e0/ffffff?text=Painting+1" alt="Painting 1">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390282.jpg" alt="Art Piece 1">
                     </div>
                     <div class="mySlides fade">
-                        <img src="https://placehold.co/800x600/8094b8/ffffff?text=Painting+2" alt="Painting 2">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390283.jpg" alt="Art Piece 2">
                     </div>
                     <div class="mySlides fade">
-                        <img src="https://placehold.co/800x600/4a6192/ffffff?text=Painting+3" alt="Painting 3">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390284.jpg" alt="Art Piece 3">
                     </div>
+                    <div class="mySlides fade">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390285.jpg" alt="Art Piece 4">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390286.jpg" alt="Art Piece 5">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390288.jpg" alt="Art Piece 6">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390289.jpg" alt="Art Piece 7">
+                    </div>
+
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <br>
+
+                <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                    <span class="dot" onclick="currentSlide(6)"></span>
+                    <span class="dot" onclick="currentSlide(7)"></span>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Shop Page -->
     <div id="shop" class="page">
-        <!-- Featured Art Section -->
         <section class="py-5">
             <div class="container">
                 <h2 class="text-center section-heading mb-5">Featured Paintings</h2>
                 <div class="row g-4">
-                    <!-- Art Piece 1 -->
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
                             <img src="https://placehold.co/600x400/9b59b6/ffffff?text=Abstract+Nebula" class="card-img-top img-fluid rounded-top-3" alt="Abstract Nebula Painting">
@@ -254,7 +383,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Art Piece 2 -->
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
                             <img src="https://placehold.co/600x400/3498db/ffffff?text=Ocean+Serenity" class="card-img-top img-fluid rounded-top-3" alt="Ocean Serenity Painting">
@@ -268,7 +396,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Art Piece 3 -->
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
                             <img src="https://placehold.co/600x400/e74c3c/ffffff?text=Urban+Life" class="card-img-top img-fluid rounded-top-3" alt="Urban Life Painting">
@@ -287,9 +414,7 @@
         </section>
     </div>
 
-    <!-- Contact Page -->
     <div id="contact" class="page">
-        <!-- Contact & Commissions Section -->
         <section class="py-5">
             <div class="container text-center">
                 <h2 class="section-heading mb-4">Get in Touch</h2>
@@ -319,10 +444,9 @@
         </section>
     </div>
 
-    <!-- Footer -->
     <footer class="footer py-4">
         <div class="container text-center">
-            <p class="mb-2">&copy; 2024 Damini's Canvas. All rights reserved.</p>
+            <p class="mb-2">&copy; 2025 Damini's Canvas. All rights reserved.</p>
             <div class="d-flex justify-content-center gap-3">
                 <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                 <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
@@ -331,44 +455,64 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         let slideIndex = 1;
 
-        document.addEventListener("DOMContentLoaded", function() {
-            showSlides(slideIndex);
-        });
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            if (pageId === 'home') {
+                slideIndex = 1; // Reset slideshow to the first slide
+                showSlides(slideIndex);
+            }
+        }
 
         function plusSlides(n) {
             showSlides(slideIndex += n);
         }
 
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
         function showSlides(n) {
             let i;
             let slides = document.getElementsByClassName("mySlides");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            slides[slideIndex-1].style.display = "block";
-        }
-
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.getElementsByClassName('page');
-            for (let i = 0; i < pages.length; i++) {
-                pages[i].classList.remove('active');
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
             }
-
-            // Show the requested page
-            const selectedPage = document.getElementById(pageId);
-            if (selectedPage) {
-                selectedPage.classList.add('active');
+            if (slides.length > 0) {
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active-dot";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home'); // Ensure the home page is active on initial load
+        });
+
+let autoSlideInterval;
+
+document.addEventListener('DOMContentLoaded', () => {
+    showPage('home');
+    autoSlideInterval = setInterval(() => {
+        if (document.getElementById('home').classList.contains('active')) {
+            plusSlides(1);
+        }
+    }, 5000); // Change slide every 5 seconds
+});
+
     </script>
 </body>
 </html>
