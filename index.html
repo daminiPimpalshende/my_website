@@ -155,12 +155,18 @@
         }
         
         .social-icon {
-            color: var(--text-light);
+            color: white;
             font-size: 1.5rem;
             transition: color 0.3s ease;
         }
         
         .social-icon:hover {
+            color: var(--primary-blue);
+        }
+        .text-dark .social-icon {
+            color: var(--text-dark);
+        }
+        .text-dark .social-icon:hover {
             color: var(--primary-blue);
         }
 
@@ -307,13 +313,11 @@
         Your browser does not support the video tag.
     </video>
 
-    <!-- Text overlay positioned at the top -->
     <div class="hero-overlay-text text-center text-dark">
         <h1 class="hero-title">Damini's Art Mine</h1>
         <p class="hero-subtitle">Bringing Imagination to Life Through Art</p>
     </div>
 
-    <!-- Button remains in the center (or can be moved below gallery if preferred) -->
     <div class="container text-center text-dark mt-auto mb-5">
     <a href="#featured-section" class="btn btn-custom mt-3">Explore Now</a>
 </div>
@@ -372,39 +376,84 @@
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
-                            <img src="https://placehold.co/600x400/9b59b6/ffffff?text=Abstract+Nebula" class="card-img-top img-fluid rounded-top-3" alt="Abstract Nebula Painting">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390282.jpg" class="card-img-top img-fluid rounded-top-3" alt="Blossoms of Identity">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Abstract Nebula</h5>
-                                <p class="card-text text-muted">A vibrant mix of cosmic colors, capturing the mystery of space. Oil on canvas.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="art-price fs-5">$450</span>
-                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                <h5 class="card-title fw-bold">Blossoms of Identity</h5>
+                                <p class="card-text text-muted">This striking portrait blends human features with blooming lilies, symbolizing the harmony between nature and self. The vibrant blue hair and expressive lips contrast beautifully with the delicate flowers, hinting at inner growth and individuality.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Blossoms of Identity')">Show Interest</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
-                            <img src="https://placehold.co/600x400/3498db/ffffff?text=Ocean+Serenity" class="card-img-top img-fluid rounded-top-3" alt="Ocean Serenity Painting">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390283.jpg" class="card-img-top img-fluid rounded-top-3" alt="Golden-Silver Fern Elegance">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Ocean Serenity</h5>
-                                <p class="card-text text-muted">A calm and soothing representation of a peaceful ocean scene. Acrylic on canvas.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="art-price fs-5">$380</span>
-                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                <h5 class="card-title fw-bold">Golden-Silver Fern Elegance</h5>
+                                <p class="card-text text-muted">A minimalist yet striking artwork featuring delicately embossed golden and silver leaves on a textured black background. The contrast gives a regal and modern aesthetic to the piece.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Golden-Silver Fern Elegance')">Show Interest</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 rounded-3 overflow-hidden">
-                            <img src="https://placehold.co/600x400/e74c3c/ffffff?text=Urban+Life" class="card-img-top img-fluid rounded-top-3" alt="Urban Life Painting">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390284.jpg" class="card-img-top img-fluid rounded-top-3" alt="Tropical Texture">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Urban Life</h5>
-                                <p class="card-text text-muted">A dynamic painting of city life and its constant motion. Mixed media on canvas.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="art-price fs-5">$520</span>
-                                    <a href="#" class="btn btn-outline-primary rounded-pill">Buy Now</a>
+                                <h5 class="card-title fw-bold">Tropical Texture</h5>
+                                <p class="card-text text-muted">A vibrant representation of lush green leaves brought to life with textured strokes on a white palette-knifed background. The 3D effect and rich hues capture the raw beauty and energy of tropical nature.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Tropical Texture')">Show Interest</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390285.jpg" class="card-img-top img-fluid rounded-top-3" alt="Duality of Serenity">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Duality of Serenity</h5>
+                                <p class="card-text text-muted">A circular painting of Lord Buddha split into bold blue and yellow halves, symbolizing balance, duality, and enlightenment. The dynamic splash patterns surrounding the serene face add modern vibrance to this spiritual artwork.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Duality of Serenity')">Show Interest</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390286.jpg" class="card-img-top img-fluid rounded-top-3" alt="Serenity by the Shore">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Serenity by the Shore</h5>
+                                <p class="card-text text-muted">A round canvas depicting a lone boat resting at the edge of the shore, where foamy waves meet golden sand. The painting evokes peace, solitude, and the calmness of nature.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Serenity by the Shore')">Show Interest</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390288.jpg" class="card-img-top img-fluid rounded-top-3" alt="Dancing Koi in Water">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Dancing Koi in Water</h5>
+                                <p class="card-text text-muted">Two vibrant koi fish glide gracefully in swirling blue water with air bubbles around them, symbolizing harmony, balance, and prosperity. The rich orange and golden hues make the painting lively and auspicious.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Dancing Koi in Water')">Show Interest</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 rounded-3 overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390289.jpg" class="card-img-top img-fluid rounded-top-3" alt="Royal Elephant in Festive Glory">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Royal Elephant in Festive Glory</h5>
+                                <p class="card-text text-muted">A traditional folk-style painting of a decorated elephant against a bright yellow backdrop. The intricate ornaments and border work highlight Indian cultural richness and celebration.</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#" class="btn btn-outline-primary rounded-pill" onclick="sendWhatsApp('Royal Elephant in Festive Glory')">Show Interest</a>
                                 </div>
                             </div>
                         </div>
@@ -424,18 +473,18 @@
                 <div class="d-flex justify-content-center">
                     <ul class="list-unstyled">
                         <li class="mb-3">
-                            <a href="mailto:info@stellarcanvas.com" class="text-decoration-none text-dark">
-                                <i class="fa-solid fa-envelope fs-4 me-2"></i> info@stellarcanvas.com
+                            <a href="mailto:daminipimpalshende@gmail.com" class="text-decoration-none text-dark">
+                                <i class="fa-solid fa-envelope fs-4 me-2"></i> daminipimpalshende@gmail.com
                             </a>
                         </li>
                         <li class="mb-3">
                             <a href="#" class="text-decoration-none text-dark">
-                                <i class="fa-brands fa-instagram fs-4 me-2"></i> @stellarcanvas
+                                <i class="fa-brands fa-instagram fs-4 me-2"></i> @art_min25
                             </a>
                         </li>
                         <li class="mb-3">
-                            <a href="#" class="text-decoration-none text-dark">
-                                <i class="fa-brands fa-twitter fs-4 me-2"></i> @stellarcanvas
+                            <a href="https://wa.me/9356525835" target="_blank" class="text-decoration-none text-dark">
+                                <i class="fa-brands fa-whatsapp fs-4 me-2"></i> 9356525835
                             </a>
                         </li>
                     </ul>
@@ -449,7 +498,7 @@
             <p class="mb-2">&copy; 2025 Damini's Canvas. All rights reserved.</p>
             <div class="d-flex justify-content-center gap-3">
                 <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="https://wa.me/9356525835" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
                 <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
             </div>
         </div>
@@ -496,6 +545,14 @@
                 slides[slideIndex - 1].style.display = "block";
                 dots[slideIndex - 1].className += " active-dot";
             }
+        }
+
+        function sendWhatsApp(title) {
+            const phoneNumber = "9356525835";
+            const message = `Hi I am interested to know more about ${title} Painting.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
