@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Damini's AR Canvas Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #00509e;
+    }
+
+    #ar-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      z-index: 9999;
+    }
+
+    button {
+      background-color: #00509e;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #0072ce;
+    }
+
+    .marker-instructions img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      margin-top: 1rem;
+    }
+  </style>
+
+  <!-- MindAR + A-Frame Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.1/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <h1>See the Painting on Your Wall (AR)</h1>
+    <p>Click the button below and point your camera at the image below to view the painting in Augmented Reality.</p>
+
+    <button onclick="startAR()">View in AR</button>
+
+    <div class="marker-instructions">
+      <p><strong>Scan this marker with your phone camera:</strong></p>
+      <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/targets.jpg" alt="AR Marker Image" />
+    </div>
+  </div>
+
+  <!-- AR Container -->
+  <div id="ar-container">
+    <a-scene 
+      mindar-image="imageTargetSrc: https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/targets.mind; autoStart: true; uiScanning: yes;" 
+      embedded 
+      arjs 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: true">
+
+      <a-assets>
+        <!-- Painting image used in AR -->
+        <img id="painting" src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390289.jpg" />
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <!-- Painting plane -->
+        <a-plane src="#painting" height="1" width="1" position="0 0 0"></a-plane>
+      </a-entity>
+    </a-scene>
+  </div>
+
+  <script>
+    function startAR() {
+      document.getElementById('ar-container').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
