@@ -3,105 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Damini's AR Canvas Viewer</title>
+  <title>AR Camera Filter</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      color: #333;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-family: sans-serif;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
-      text-align: center;
+    #camera-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
     }
 
-    h1 {
-      font-size: 2rem;
-      color: #00509e;
+    video, canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
     }
 
-    #ar-container {
-      display: none;
-      position: fixed;
+    canvas {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      z-index: 9999;
+      pointer-events: none;
     }
 
     button {
-      background-color: #00509e;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #4CAF50;
       color: white;
-      padding: 1rem 2rem;
       border: none;
-      font-size: 1rem;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 1rem;
     }
 
     button:hover {
-      background-color: #0072ce;
-    }
-
-    .marker-instructions img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-      margin-top: 1rem;
+      background-color: #45a049;
     }
   </style>
-
-  <!-- MindAR + A-Frame Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.1/dist/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body>
 
-  <div class="container">
-    <h1>See the Painting on Your Wall (AR)</h1>
-    <p>Click the button below and point your camera at the image below to view the painting in Augmented Reality.</p>
+  <h1>AR Camera with Filter</h1>
 
-    <button onclick="startAR()">View in AR</button>
+  <button onclick="startAR()">Start AR Camera</button>
 
-    <div class="marker-instructions">
-      <p><strong>Scan this marker with your phone camera:</strong></p>
-      <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/targets.jpg" alt="AR Marker Image" />
-    </div>
-  </div>
-
-  <!-- AR Container -->
-  <div id="ar-container">
-    <a-scene 
-      mindar-image="imageTargetSrc: https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/targets.mind; autoStart: true; uiScanning: yes;" 
-      embedded 
-      arjs 
-      vr-mode-ui="enabled: false" 
-      device-orientation-permission-ui="enabled: true">
-
-      <a-assets>
-        <!-- Painting image used in AR -->
-        <img id="painting" src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/1000390289.jpg" />
-      </a-assets>
-
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-      <a-entity mindar-image-target="targetIndex: 0">
-        <!-- Painting plane -->
-        <a-plane src="#painting" height="1" width="1" position="0 0 0"></a-plane>
-      </a-entity>
-    </a-scene>
+  <div id="camera-container">
+    <video id="video" autoplay muted playsinline></video>
+    <canvas id="overlay"></canvas>
   </div>
 
   <script>
-    function startAR() {
-      document.getElementById('ar-container').style.display = 'block';
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('overlay');
+    const context = canvas.getContext('2d');
+
+    const filterImage = new Image();
+   filterImage.src = 'https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/ganpati.png';
+
+    async function startAR() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+
+        video.onloadedmetadata = () => {
+          video.play();
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+
+          drawOverlay();
+        };
+      } catch (err) {
+        alert('Error accessing camera: ' + err);
+      }
+    }
+
+    function drawOverlay() {
+      requestAnimationFrame(drawOverlay);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the AR filter at a specific position (e.g., center top)
+      const filterWidth = canvas.width * 0.5;
+      const filterHeight = filterWidth * (filterImage.height / filterImage.width);
+      const x = (canvas.width - filterWidth) / 2;
+      const y = 50; // adjust as needed
+
+      if (filterImage.complete) {
+        context.drawImage(filterImage, x, y, filterWidth, filterHeight);
+      }
     }
   </script>
 
