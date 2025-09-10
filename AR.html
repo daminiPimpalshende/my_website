@@ -57,6 +57,27 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filters img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      object-fit: contain;
+    }
+
+    .filters img.selected {
+      border-color: #4CAF50;
+    }
   </style>
 </head>
 <body>
@@ -64,8 +85,17 @@
   <h1>AR Camera with Filter</h1>
 
   <div class="buttons">
+    <button onclick="goHome()">Back to Home</button>
     <button onclick="startAR()">Start AR Camera</button>
     <button onclick="flipCamera()">Flip Camera</button>
+  </div>
+
+  <!-- Filter selection -->
+  <div class="filters" id="filter-selection">
+    <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/png/1000390699.png" onclick="setFilter(this)">
+    <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/png/1000390700.png" onclick="setFilter(this)">
+    <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/png/1000390701.png" onclick="setFilter(this)">
+    <img src="https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/png/1000390702.png" onclick="setFilter(this)">
   </div>
 
   <div id="camera-container">
@@ -74,12 +104,16 @@
   </div>
 
   <script>
+function goHome() {
+  window.location.href = "https://daminipimpalshende.github.io/my_website/";
+}
+
     const video = document.getElementById('video');
     const canvas = document.getElementById('overlay');
     const context = canvas.getContext('2d');
 
     const filterImage = new Image();
-    filterImage.src = 'https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/ganpati.png';
+    filterImage.src = 'https://raw.githubusercontent.com/daminiPimpalshende/my_website/main/png/1000390699.png'; // default
 
     let filterScale = 0.5;
     let filterX = 0;
@@ -92,6 +126,23 @@
     let currentStream = null;
     let usingFrontCamera = true;
 
+    function setFilter(imgElement) {
+      const newSrc = imgElement.src;
+      filterImage.src = newSrc;
+
+      // Visually mark selected
+      document.querySelectorAll('.filters img').forEach(el => el.classList.remove('selected'));
+      imgElement.classList.add('selected');
+
+      // Reset position & scale
+      filterScale = 0.5;
+      if (canvas.width) {
+        const filterWidth = canvas.width * filterScale;
+        filterX = (canvas.width - filterWidth) / 2;
+        filterY = 50;
+      }
+    }
+
     async function startAR() {
       await startCamera(usingFrontCamera ? 'user' : 'environment');
     }
@@ -103,7 +154,6 @@
 
     async function startCamera(facingMode) {
       try {
-        // Stop existing stream
         if (currentStream) {
           currentStream.getTracks().forEach(track => track.stop());
         }
@@ -123,7 +173,6 @@
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
 
-          // Center filter
           const filterWidth = canvas.width * filterScale;
           filterX = (canvas.width - filterWidth) / 2;
           filterY = 50;
@@ -174,7 +223,7 @@
       filterScale = Math.max(0.1, Math.min(2, filterScale));
     });
 
-    // Touch controls (drag and pinch)
+    // Touch controls
     canvas.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         isDragging = true;
@@ -213,6 +262,14 @@
       const dy = touch2.clientY - touch1.clientY;
       return Math.hypot(dx, dy);
     }
+
+    // Auto-select first filter on load
+    window.addEventListener('load', () => {
+      const firstFilter = document.querySelector('.filters img');
+      if (firstFilter) {
+        setFilter(firstFilter);
+      }
+    });
   </script>
 
 </body>
